@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Secrets: never commit real passwords or connection strings
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+coverage/
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db

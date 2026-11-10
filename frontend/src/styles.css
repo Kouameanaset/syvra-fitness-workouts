@@ -1,0 +1,407 @@
+/* One global stylesheet. Mobile-first: the base rules are for phones and the
+   @media (min-width: ...) blocks at the bottom add the desktop layout.
+
+   Colours are CSS variables ("custom properties"): we define them once for
+   the light theme, then redefine them for the dark theme. All the rules
+   below only use var(--name), so switching theme changes everything. */
+
+:root {
+  /* Syvra brand - light theme */
+  --bg: #f8fafa;
+  --surface: #ffffff;
+  --text: #0b5c7a; /* deep teal-blue, contrast on --bg about 7:1 */
+  --heading: #0e7c7b; /* darker turquoise: #6FCFC3 is too pale for text (about 1.9:1); this is about 4.7:1 */
+  --accent: #6fcfc3; /* original brand turquoise, only for decoration (borders, focus) */
+  --mint: #a8e8d0; /* badge background */
+  --on-mint: #0b5c7a;
+  --border: #cfe3e3;
+  --primary-bg: #0b5c7a; /* primary buttons */
+  --primary-text: #ffffff;
+  --danger: #b3261e; /* about 6:1 on white */
+  --shadow: 0 2px 10px rgba(11, 92, 122, 0.08);
+  --radius: 16px;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b3b5e;
+  --surface: #06294a;
+  --text: #ffffff;
+  --heading: #6fcfc3;
+  --accent: #6fcfc3;
+  --mint: #a8e8d0;
+  --on-mint: #06294a;
+  --border: #1d5a80;
+  --primary-bg: #6fcfc3;
+  --primary-text: #06294a;
+  --danger: #ffb4ab;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box; /* width includes padding and border: easier maths */
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  transition: background 0.2s, color 0.2s;
+}
+
+h1,
+h2 {
+  color: var(--heading);
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+h1 {
+  font-size: 1.75rem;
+}
+h2 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+a {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* A clear outline for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 3rem;
+}
+
+/* ---------- Header ---------- */
+.skip-link {
+  position: absolute;
+  left: -999px;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  background: var(--surface);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  z-index: 10;
+}
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.site-header .container {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.header-inner {
+  display: flex;
+  flex-wrap: wrap; /* on phones the nav drops below the logo */
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+.logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: var(--text);
+}
+.logo span {
+  color: var(--heading);
+  font-weight: 600;
+  letter-spacing: normal;
+}
+.nav {
+  display: flex;
+  gap: 0.25rem;
+  order: 3; /* after the theme button on small screens */
+  width: 100%;
+}
+.nav a {
+  text-decoration: none;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+}
+.nav a.active {
+  background: var(--mint);
+  color: var(--on-mint);
+}
+.theme-toggle {
+  margin-left: auto;
+}
+
+/* ---------- Buttons (pill shaped) ---------- */
+.btn {
+  display: inline-block;
+  font: inherit;
+  font-weight: 600;
+  padding: 0.55rem 1.25rem;
+  min-height: 44px; /* comfortable touch target */
+  border-radius: 999px;
+  border: 2px solid var(--primary-bg);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--primary-bg);
+  color: var(--primary-text);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--text);
+}
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.btn-small {
+  padding: 0.3rem 0.9rem;
+  min-height: 36px;
+}
+
+/* ---------- Layout helpers ---------- */
+.page-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.page-head h1 {
+  margin: 0;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.card,
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+.panel {
+  margin: 1rem 0;
+}
+.panel h2 {
+  margin-top: 0;
+}
+.panel .card {
+  box-shadow: none;
+  border: 0;
+  padding: 0;
+}
+.muted {
+  opacity: 0.85;
+}
+.empty,
+.status {
+  padding: 1rem 0;
+}
+.badge {
+  display: inline-block;
+  background: var(--mint);
+  color: var(--on-mint);
+  border-radius: 999px;
+  padding: 0.1rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+/* ---------- Forms ---------- */
+.form {
+  display: grid;
+  gap: 1rem;
+}
+.field {
+  display: grid;
+  gap: 0.35rem;
+}
+label {
+  font-weight: 600;
+}
+input,
+select,
+textarea {
+  font: inherit;
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  min-height: 44px;
+  color: var(--text);
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+.filter select {
+  width: auto;
+}
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+.field-error {
+  color: var(--danger);
+  font-weight: 600;
+  margin: 0;
+}
+.field-hint {
+  margin: 0;
+  font-size: 0.9rem;
+}
+.error-box {
+  border: 2px solid var(--danger);
+  color: var(--danger);
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+}
+.error-box p {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+/* ---------- Lists ---------- */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.list-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+.list-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+.list-item-wrap > .form {
+  width: 100%;
+}
+
+/* ---------- Table: cards on phones ---------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+/* Phone: hide the header row, make every row a card, and show each cell's
+   data-label in front of its value. */
+.table thead {
+  position: absolute;
+  left: -9999px;
+}
+.table,
+.table tbody,
+.table tr,
+.table td {
+  display: block;
+}
+.table tr {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+.table td {
+  padding: 0.3rem 0;
+}
+.table td::before {
+  content: attr(data-label);
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+/* ---------- Desktop ---------- */
+@media (min-width: 700px) {
+  .nav {
+    order: 0;
+    width: auto;
+  }
+  .form-inline {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    align-items: end;
+  }
+  .form-inline .actions {
+    align-self: end;
+  }
+
+  .table {
+    display: table;
+  }
+  .table thead {
+    position: static;
+    display: table-header-group;
+  }
+  .table tbody {
+    display: table-row-group;
+  }
+  .table tr {
+    display: table-row;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+  .table td,
+  .table th {
+    display: table-cell;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border);
+  }
+  .table th {
+    color: var(--heading);
+  }
+  .table td::before {
+    display: none;
+  }
+}
+
+/* When a form is scrolled into view (see useScrollIntoViewOnMount), keep a
+   little space above it so the "Edit ..." title above the form stays visible. */
+.form {
+  scroll-margin-top: 6rem;
+}
