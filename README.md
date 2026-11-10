@@ -6,10 +6,10 @@ Syvra Fitness is a small full-stack web application to build workouts. A user ca
 
 | Item | URL |
 |------|-----|
-| Website (Vercel) | `<TODO: Vercel URL>` |
-| API (Render) | `<TODO: Render URL>` |
-| API health check | `<TODO: Render URL>/api/health` |
-| Repository (GitHub) | `<TODO: GitHub URL>` |
+| Website (Vercel) | https://syvra-fitness-workouts.vercel.app |
+| API (Render) | https://syvra-fitness-api.onrender.com |
+| API health check | https://syvra-fitness-api.onrender.com/api/health |
+| Repository (GitHub) | https://github.com/Kouameanaset/syvra-fitness-workouts |
 
 Note: the API runs on the Render free plan. After 15 minutes without traffic the service sleeps, so the **first request can take about 50 seconds**. If the website shows an error or a long loading state at first, wait and reload.
 
